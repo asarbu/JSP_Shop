@@ -14,7 +14,7 @@
 		u.setUsername("Sebi");
 		u.setPassword("password");
 		
-		UserDAO user_dao = new UserDAOSQL();
+		UserDAO user_dao = new UserDAOFile();
 		user_dao.register(u);
 		User logged_in_user = user_dao.login("Sebi", "password");
 	%>
@@ -22,7 +22,7 @@
 	<br>
 				
 	<% 
-		EntityDAO entity_dao = new EntityDAOSQL();
+		EntityDAO entity_dao = new EntityDAOFile();
 
 		Entity e = new Entity(); 
 		e.setId(1);
