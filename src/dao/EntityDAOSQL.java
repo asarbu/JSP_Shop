@@ -158,14 +158,6 @@ public class EntityDAOSQL implements EntityDAO
 				
 				Statement stmt = con.createStatement();
 				
-		       
-				/*stmt.setString(1, entity.getName());
-				stmt.setString(2, entity.getDescription());
-				stmt.setString(3, entity.getCategory());
-				stmt.setDouble(4, entity.getPrice());
-				stmt.setInt(5, entity.getQuantity());
-				System.out.println(stmt.toString());*/
-				
 		        int result = stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 		         
 				if(result > 0) {
@@ -195,12 +187,6 @@ public class EntityDAOSQL implements EntityDAO
 			else
 			{
 				String sql = "update entities set "+C_NAME+"=\'"+ entity.getName() +"\', "+C_DESCRIPTION+"=\'"+ entity.getDescription() +"\', "+C_CATEGORY+"=\'" + entity.getCategory() + "\', "+C_PRICE+"=" + entity.getPrice() + ", "+C_QUANTITY+"=" + entity.getQuantity() + " where "+C_ID+"="+entity.getId() + ";";
-				//PreparedStatement stmt = con.prepareStatement("update entities set "+C_NAME+"=?, "+C_DESCRIPTION+"=?, "+C_CATEGORY+"=?, "+C_PRICE+"=?, "+C_QUANTITY+"=? where "+C_ID+"="+entity.getId() + ";");
-				/*stmt.setString(1, entity.getName());
-				stmt.setString(2, entity.getDescription());
-				stmt.setString(3, entity.getCategory());
-				stmt.setDouble(4, entity.getPrice());
-				stmt.setInt(5, entity.getQuantity());*/
 				System.out.println(sql);
 				Statement stmt = con.createStatement();
 				stmt.executeUpdate(sql);

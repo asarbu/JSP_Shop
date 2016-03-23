@@ -24,6 +24,15 @@ public class UserDAOSQL implements UserDAO
 	
 	private static Connection con=null; 
 		
+	public UserDAOSQL() {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	@Override
 	public User get(String username) {
 		try {
@@ -61,7 +70,7 @@ public class UserDAOSQL implements UserDAO
 	@Override
 	public User login(String username, String password) {
 		User user=get(username);
-		if(user.getPassword().equals(password))
+		if(user != null && user.getPassword().equals(password))
 			return user;
 		return null;
 	}
@@ -74,7 +83,7 @@ public class UserDAOSQL implements UserDAO
 				System.out.println("Null connection.");
 			else
 			{
-				String sql = "insert into user("+C_USERNAME+","+C_PASSWORD+","+C_NAME+","+C_ADDRESS+") values ("
+				String sql = "insert into users("+C_USERNAME+","+C_PASSWORD+","+C_NAME+","+C_ADDRESS+") values ("
 						+ "\'" + user.getUsername() + "\',\'" + user.getPassword() + "\', '"+ user.getName() + "\',\'" + 
 						user.getAddress() +"\')";
 				System.out.println("Executing SQL: " + sql);

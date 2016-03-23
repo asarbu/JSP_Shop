@@ -19,12 +19,7 @@
 		User logged_in_user = user_dao.login("Sebi", "password");
 	%>
 	<%=logged_in_user.getUsername() %>
-	<br>	/*stmt.setString(1, entity.getName());
-				stmt.setString(2, entity.getDescription());
-				stmt.setString(3, entity.getCategory());
-				stmt.setDouble(4, entity.getPrice());
-				stmt.setInt(5, entity.getQuantity());
-				System.out.println(stmt.toString());*/
+	<br>
 				
 	<% 
 		EntityDAO entity_dao = new EntityDAOSQL();
