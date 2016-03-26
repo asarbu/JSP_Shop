@@ -88,4 +88,16 @@ public class UserDAOFile implements UserDAO{
 	public User get(String username) {
 		return hashmap.get(username);
 	}
+
+	@Override
+	public boolean update(User user) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean checkout(User user) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

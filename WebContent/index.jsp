@@ -14,21 +14,22 @@
 		u.setUsername("Sebi");
 		u.setPassword("password");
 		
-		UserDAO user_dao = new UserDAOFile();
-		user_dao.register(u);
+		UserDAO user_dao = new UserDAOSQL();
+		//user_dao.register(u);
 		User logged_in_user = user_dao.login("Sebi", "password");
 	%>
 	<%=logged_in_user.getUsername() %>
 	<br>
 				
 	<% 
-		EntityDAO entity_dao = new EntityDAOFile();
+		EntityDAO entity_dao = new EntityDAOSQL();
 
 		Entity e = new Entity(); 
 		e.setId(1);
 		e.setName("E1");
 		e.setDescription("Description");
 		e.setCategory("Category");
+		e.setQuantity(5);
 		entity_dao.add(e);
 		
 		e = new Entity(); 
@@ -36,6 +37,7 @@
 		e.setName("E2");
 		e.setDescription("Description");
 		e.setCategory("Category");
+		e.setQuantity(5);
 		entity_dao.add(e);
 		
 		e = new Entity(); 
@@ -43,14 +45,29 @@
 		e.setName("E3");
 		e.setDescription("Description");
 		e.setCategory("Category");
+		e.setQuantity(5);
 		entity_dao.add(e);
 		e.setName("E4");
 		entity_dao.update(e);
 		
 		for(Entity entity: entity_dao.getAll()) {
 	%>
-			<h2><%=entity.getName()%></h2> <br>
+			<h2><%=entity.toString()%></h2> <br>
 	<% 
+		} 
+		
+		e.setQuantity(2);
+	%>Buying: <%=e.toString()%> 
+	<%
+		u.addToCart(e);
+		user_dao.checkout(u);
+		
+		%><br> After update: <br><%
+		
+		for(Entity entity: entity_dao.getAll()) {
+		%>
+				<h2><%=entity.toString()%></h2> <br>
+		<% 
 		} 
 	%>
 	</h1>

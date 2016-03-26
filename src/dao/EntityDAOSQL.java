@@ -17,12 +17,12 @@ public class EntityDAOSQL implements EntityDAO
 	static final String USER = "testuser";
 	static final String PASSWORD = "password";
 	
-	private static final String C_ID="id";
-	private static final String C_NAME="name";
-	private static final String C_DESCRIPTION="description";
-	private static final String C_CATEGORY="category";
-	private static final String C_PRICE="price";
-	private static final String C_QUANTITY="quantity";
+	public static final String C_ID="id";
+	public static final String C_NAME="name";
+	public static final String C_DESCRIPTION="description";
+	public static final String C_CATEGORY="category";
+	public static final String C_PRICE="price";
+	public static final String C_QUANTITY="quantity";
 	
 	private static Connection con=null; 
 	

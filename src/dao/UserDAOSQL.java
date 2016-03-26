@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import framework.Entity;
 import framework.User;
@@ -21,6 +23,9 @@ public class UserDAOSQL implements UserDAO
 	private static final String C_USERNAME="username";
 	private static final String C_PASSWORD="password";
 	private static final String C_ADDRESS="address";
+	private static final String C_UID="uid";
+	private static final String C_PID="pid";
+	private static final String C_QUANTITY="quantity";
 	
 	private static Connection con=null; 
 		
@@ -90,8 +95,6 @@ public class UserDAOSQL implements UserDAO
 				
 				Statement stmt = con.createStatement();
 				
-		       
-	
 		        int result = stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 		         
 				if(result > 0) {
@@ -112,4 +115,67 @@ public class UserDAOSQL implements UserDAO
 		return false;
 	}
 
+	@Override
+	public boolean update(User user) {
+		try {
+			con=DriverManager.getConnection(databasePath, USER, PASSWORD);
+			if(con==null)
+				System.out.println("Null connection.");
+			else
+			{
+				String sql = "update table users("+C_USERNAME+","+C_PASSWORD+","+C_NAME+","+C_ADDRESS+") values ("
+						+ "\'" + user.getUsername() + "\',\'" + user.getPassword() + "\', '"+ user.getName() + "\',\'" + 
+						user.getAddress() +"\')";
+				System.out.println("Executing SQL: " + sql);
+				
+				Statement stmt = con.createStatement();
+				
+		        int result = stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+		         
+				if(result > 0) {
+					ResultSet rs = stmt.getGeneratedKeys();
+					if (rs.next()){
+					    int id = rs.getInt(1);
+					    user.setId(id);
+					}
+				}
+				
+		         con.close();
+		         return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+
+	@Override
+	public boolean checkout(User user) {
+		List<Entity> products=user.getCart();
+		
+		try {
+			con=DriverManager.getConnection(databasePath, USER, PASSWORD);
+			if(con==null)
+				System.out.println("Null connection.");
+			else
+			{
+				for(Entity p:products)
+				{		
+					String sql = "update entities set " + EntityDAOSQL.C_QUANTITY + "="  + EntityDAOSQL.C_QUANTITY + "-" + p.getQuantity() +" where "+EntityDAOSQL.C_ID+"="+p.getId();	
+					System.out.println("Executing SQL: " + sql);
+					
+					Statement stmt = con.createStatement();
+					
+			        stmt.executeUpdate(sql);
+			        
+				}
+		         con.close();
+		         return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 }

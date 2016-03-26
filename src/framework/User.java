@@ -1,6 +1,10 @@
 package framework;
 
 import java.util.List;
+
+import dao.EntityDAO;
+import dao.EntityDAOSQL;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -50,8 +54,23 @@ public class User implements Serializable{
 		this.address = address;
 	}
 	
-	public void addToCart(Entity e) {
-		this.shopCart.add(e);
+	public boolean addToCart(Entity e) {
+		EntityDAO edao = new EntityDAOSQL();
+		List<Entity> all = edao.getAll();
+		System.out.println("To search: " + e);
+		for(Entity temp : all) {
+			System.out.println("Against: " + temp);
+			if(temp.getId() == e.getId() && temp.getQuantity() >= e.getQuantity()) {
+				//e contains the quantity
+				//e.getQuantity()
+				System.out.println("Product found! Adding to cart: " + e.toString());
+				this.shopCart.add(e);
+				return true;
+			}
+		}
+		System.out.println("Product not found: " + e.toString());
+		
+		return false;
 	}
 	public void removeFromCart(Entity e) {
 		for(Entity entity : this.shopCart) {
@@ -59,5 +78,9 @@ public class User implements Serializable{
 				this.shopCart.remove(entity);
 			}
 		}
+	}
+	public List<Entity> getCart() {
+		return shopCart;
+		
 	}
 }

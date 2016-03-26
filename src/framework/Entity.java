@@ -54,4 +54,18 @@ public class Entity implements Serializable{
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
+	public boolean equals(Object o) {
+		if(o instanceof Entity) {
+			Entity e = (Entity) o;
+			if(e.id == (this.id))
+				return true;
+		}
+		return false;
+	}
+	public String toString(){
+		return 	"Product ID: " + this.getId() + 
+				this.getName() + " - " + this.getDescription() + ", " + 
+				this.getCategory() + ", " + this.getPrice() + " RON, " + 
+				this.getQuantity() + " pcs";
+	}
 }
